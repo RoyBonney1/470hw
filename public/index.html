@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quote of the Day</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        text-align: center;
+        background-color: #f4f4f4;
+      }
+
+      #quote {
+        font-size: 24px;
+        margin-bottom: 20px;
+        max-width: 600px;
+      }
+
+      #author {
+        font-size: 20px;
+        color: gray;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quote of the Day</h1>
+    <p id="quote">Click below to get a quote</p>
+    <p id="author"></p>
+    <button onclick="getQuote()">Get Quote</button>
+
+    <script>
+      async function getQuote() {
+        try {
+          const response = await fetch("/quote");
+          const data = await response.json();
+          document.getElementById("quote").innerText = `"${data.quote}"`;
+          document.getElementById("author").innerText = `- ${data.author}`;
+        } catch (error) {
+          document.getElementById("quote").innerText = "Error fetching quote.";
+          document.getElementById("author").innerText = "";
+        }
+      }
+    </script>
+  </body>
+</html>
